@@ -1,5 +1,14 @@
 # Open MCT Integration Tutorials
 
+This is a fork of the original OpenMCT Tutorial repository that adds database logging to the realtime telemetry received over a serial port. Incoming data from the serial port is expected to be in JSON format and is assigned a current timestamp and logged to the SQLite DB.
+
+The schema for the DB is in db_structure.sql
+
+The dictionary.json file contains the ids that are populated in the front end and must have corresponding data sent over serial. See the GroundstationFirmware in the ampts-fta-software repository for more information on the data format that needs to be sent over serial.
+
+The history-server has also been modified to support querying the DB to select logged data between a given date range.
+
+
 These tutorials will walk you through the simple process of integrating your telemetry systems with Open MCT.  In case you don't have any telemetry systems, we've included a reference implementation of a historical and realtime server.  We'll take you through the process of integrating those services with Open MCT.
 
 ## Tutorial Prerequisites

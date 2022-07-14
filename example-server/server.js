@@ -11,9 +11,12 @@ var expressWs = require('express-ws');
 var app = require('express')();
 expressWs(app);
 
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('telem.db');
+
 var spacecraft = new Spacecraft();
-var realtimeServer = new RealtimeServer(spacecraft);
-var historyServer = new HistoryServer(spacecraft);
+var realtimeServer = new RealtimeServer(spacecraft,db);
+var historyServer = new HistoryServer(spacecraft,db);
 var staticServer = new StaticServer();
 
 app.use('/realtime', realtimeServer);

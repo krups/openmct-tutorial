@@ -1,8 +1,32 @@
 var express = require('express');
 
-function RealtimeServer(spacecraft) {
+const { SerialPort } = require('serialport')
+const { ReadlineParser } = require('@serialport/parser-readline')
+const port = new SerialPort({ path: '/dev/tty.usbmodem1201', baudRate: 115200 })
+
+function RealtimeServer(spacecraft,db) {
 
     var router = express.Router();
+
+    const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }))
+
+    parser.on('data', function (data) 
+    {
+        point = JSON.parse(data);
+        point.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        //console.log("Got data: " + data);
+
+        spacecraft.state[point.id] = point.value;
+
+        // insert one row into the langs table
+        db.run("INSERT INTO history(timestamp,value,id) VALUES(?,?,?)", [point.timestamp, point.value, point.id], function(err) {
+            if (err) {
+            return console.log(err.message);
+            }
+        });
+    });
+    
 
     router.ws('/', function (ws) {
         var unlisten = spacecraft.listen(notifySubscribers);

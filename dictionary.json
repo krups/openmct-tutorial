@@ -1,18 +1,18 @@
 {
-    "name": "Example Spacecraft",
-    "key": "sc",
+    "name": "AMTPS Capsule",
+    "key": "spacecraft",
     "measurements": [
         {
-            "name": "Fuel",
-            "key": "prop.fuel",
+            "name": "Battery",
+            "key": "bat",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "kilograms",
+                    "units": "volts",
                     "format": "float",
                     "min": 0,
-                    "max": 100,
+                    "max": 4.2,
                     "hints": {
                         "range": 1
                     }
@@ -29,8 +29,8 @@
             ]
         },
         {
-            "name": "Thrusters",
-            "key": "prop.thrusters",
+            "name": "Drogue Deploy",
+            "key": "pardep",
             "values": [
                 {
                     "key": "value",
@@ -38,11 +38,11 @@
                     "format": "enum",
                     "enumerations": [
                         {
-                            "string": "ON",
+                            "string": "DEPLOYED",
                             "value": 1
                         },
                         {
-                            "string": "OFF",
+                            "string": "NOT DEPLOYED",
                             "value": 0
                         }
                     ],
@@ -62,13 +62,13 @@
             ]
         },
         {
-            "name": "Received",
-            "key": "comms.recd",
+            "name": "Iridium Signal",
+            "key": "irsig",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "bytes",
+                    "units": "increments",
                     "format": "integer",
                     "hints": {
                         "range": 1
@@ -86,37 +86,13 @@
             ]
         },
         {
-            "name": "Sent",
-            "key": "comms.sent",
+            "name": "Barometer Altitude",
+            "key": "barometer_altitude",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "bytes",
-                    "format": "integer",
-                    "hints": {
-                        "range": 1
-                    }
-                },
-                {
-                    "key": "utc",
-                    "source": "timestamp",
-                    "name": "Timestamp",
-                    "format": "utc",
-                    "hints": {
-                        "domain": 1
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Generator Temperature",
-            "key": "pwr.temp",
-            "values": [
-                {
-                    "key": "value",
-                    "name": "Value",
-                    "units": "℃",
+                    "units": "meters",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -134,13 +110,13 @@
             ]
         },
         {
-            "name": "Generator Current",
-            "key": "pwr.c",
+            "name": "Internal Temperature",
+            "key": "internal_temperature",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "Amps",
+                    "units": "deg C",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -158,13 +134,421 @@
             ]
         },
         {
-            "name": "Generator Voltage",
-            "key": "pwr.v",
+            "name": "Pressure Port 1",
+            "key": "p1",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "Volts",
+                    "units": "kPa",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pressure Port 2",
+            "key": "p2",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "kPa",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "Pressure Port 3",
+            "key": "p3",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "kPa",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "Pressure Port 4",
+            "key": "p4",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "kPa",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "Pressure Port 5",
+            "key": "p5",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "kPa",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "TC 1",
+            "key": "tc1",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "TC 2",
+            "key": "tc2",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "TC 3",
+            "key": "tc3",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "TC 4",
+            "key": "tc4",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "TC 5",
+            "key": "tc5",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "TC 6",
+            "key": "tc6",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "TC 7",
+            "key": "tc7",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "TC 8",
+            "key": "tc8",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	    {
+            "name": "TC 9",
+            "key": "tc9",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "TC 10",
+            "key": "tc10",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "TC 11",
+            "key": "tc11",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "TC 12",
+            "key": "tc12",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "deg C",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+	{
+            "name": "Internal Pressure",
+            "key": "internal_pressure",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "hPa",
                     "format": "float",
                     "hints": {
                         "range": 1

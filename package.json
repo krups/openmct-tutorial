@@ -20,6 +20,8 @@
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "openmct": "latest",
+    "serialport": "^10.4.0",
+    "sqlite3": "^5.0.8",
     "ws": "^6.1.2"
   }
 }
