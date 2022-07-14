@@ -1,4 +1,4 @@
-# Open MCT Integration Tutorials
+# Open MCT for KRUPS
 
 This is a fork of the original OpenMCT Tutorial repository that adds database logging to the realtime telemetry received over a serial port. Incoming data from the serial port is expected to be in JSON format and is assigned a current timestamp and logged to the SQLite DB.
 
