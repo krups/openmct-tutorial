@@ -1,5 +1,5 @@
 {
-    "name": "AMTPS Capsule",
+    "name": "KREPE-2 Capsule",
     "key": "spacecraft",
     "measurements": [
         {
@@ -29,39 +29,6 @@
             ]
         },
         {
-            "name": "Drogue Deploy",
-            "key": "pardep",
-            "values": [
-                {
-                    "key": "value",
-                    "name": "Value",
-                    "format": "enum",
-                    "enumerations": [
-                        {
-                            "string": "DEPLOYED",
-                            "value": 1
-                        },
-                        {
-                            "string": "NOT DEPLOYED",
-                            "value": 0
-                        }
-                    ],
-                    "hints": {
-                        "range": 1
-                    }
-                },
-                {
-                    "key": "utc",
-                    "source": "timestamp",
-                    "name": "Timestamp",
-                    "format": "utc",
-                    "hints": {
-                        "domain": 1
-                    }
-                }
-            ]
-        },
-        {
             "name": "Iridium Signal",
             "key": "irsig",
             "values": [
@@ -70,30 +37,6 @@
                     "name": "Value",
                     "units": "increments",
                     "format": "integer",
-                    "hints": {
-                        "range": 1
-                    }
-                },
-                {
-                    "key": "utc",
-                    "source": "timestamp",
-                    "name": "Timestamp",
-                    "format": "utc",
-                    "hints": {
-                        "domain": 1
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Barometer Altitude",
-            "key": "barometer_altitude",
-            "values": [
-                {
-                    "key": "value",
-                    "name": "Value",
-                    "units": "meters",
-                    "format": "float",
                     "hints": {
                         "range": 1
                     }
@@ -135,7 +78,7 @@
         },
         {
             "name": "Pressure Port 1",
-            "key": "p1",
+            "key": "prs1",
             "values": [
                 {
                     "key": "value",
@@ -159,7 +102,7 @@
         },
         {
             "name": "Pressure Port 2",
-            "key": "p2",
+            "key": "prs2",
             "values": [
                 {
                     "key": "value",
@@ -183,7 +126,7 @@
         },
 	{
             "name": "Pressure Port 3",
-            "key": "p3",
+            "key": "prs3",
             "values": [
                 {
                     "key": "value",
@@ -207,7 +150,7 @@
         },
 	{
             "name": "Pressure Port 4",
-            "key": "p4",
+            "key": "prs4",
             "values": [
                 {
                     "key": "value",
@@ -231,7 +174,7 @@
         },
 	    {
             "name": "Pressure Port 5",
-            "key": "p5",
+            "key": "prs5",
             "values": [
                 {
                     "key": "value",
@@ -397,14 +340,15 @@
                 }
             ]
         },
+	    
         {
-            "name": "TC 7",
-            "key": "tc7",
+            "name": "X Angular Velocity",
+            "key": "gx",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "deg C",
+                    "units": "deg/sec",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -421,14 +365,14 @@
                 }
             ]
         },
-	    {
-            "name": "TC 8",
-            "key": "tc8",
+        {
+            "name": "Y Angular Velocity",
+            "key": "gy",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "deg C",
+                    "units": "deg/sec",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -445,14 +389,14 @@
                 }
             ]
         },
-	    {
-            "name": "TC 9",
-            "key": "tc9",
+        {
+            "name": "Z Angular Velocity",
+            "key": "gz",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "deg C",
+                    "units": "deg/sec",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -469,14 +413,14 @@
                 }
             ]
         },
-	{
-            "name": "TC 10",
-            "key": "tc10",
+        {
+            "name": "X Acceleration",
+            "key": "ax",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "deg C",
+                    "units": "m/s/s",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -493,14 +437,14 @@
                 }
             ]
         },
-	{
-            "name": "TC 11",
-            "key": "tc11",
+        {
+            "name": "Y Acceleration",
+            "key": "ay",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "deg C",
+                    "units": "m/s/s",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -517,14 +461,14 @@
                 }
             ]
         },
-	{
-            "name": "TC 12",
-            "key": "tc12",
+        {
+            "name": "Z Acceleration",
+            "key": "az",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "deg C",
+                    "units": "m/s/s",
                     "format": "float",
                     "hints": {
                         "range": 1
@@ -541,14 +485,86 @@
                 }
             ]
         },
-	{
-            "name": "Internal Pressure",
-            "key": "internal_pressure",
+        {
+            "name": "Orientation Quaternion (Real part)",
+            "key": "quat_w",
             "values": [
                 {
                     "key": "value",
                     "name": "Value",
-                    "units": "hPa",
+                    "units": "arbitrary",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Orientation Quaternion (X part)",
+            "key": "quat_x",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "arbitrary",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Orientation Quaternion (Y part)",
+            "key": "quat_y",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "arbitrary",
+                    "format": "float",
+                    "hints": {
+                        "range": 1
+                    }
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Orientation Quaternion (Z part)",
+            "key": "quat_z",
+            "values": [
+                {
+                    "key": "value",
+                    "name": "Value",
+                    "units": "arbitrary",
                     "format": "float",
                     "hints": {
                         "range": 1

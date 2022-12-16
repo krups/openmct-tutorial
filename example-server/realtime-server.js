@@ -2,7 +2,14 @@ var express = require('express');
 
 const { SerialPort } = require('serialport')
 const { ReadlineParser } = require('@serialport/parser-readline')
-const port = new SerialPort({ path: '/dev/tty.usbmodem1201', baudRate: 115200 })
+const port = new SerialPort({ path: '/dev/tty.usbmodem21201', baudRate: 115200 }, false)
+
+port.on('error', function(err) {
+    console.log("Error opening serial port: " + err); // THIS SHOULD WORK!
+    console.log("Continuing to run in DB history only mode")
+});
+
+port.open();
 
 function RealtimeServer(spacecraft,db) {
 
@@ -13,9 +20,7 @@ function RealtimeServer(spacecraft,db) {
     parser.on('data', function (data) 
     {
         point = JSON.parse(data);
-        point.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-        //console.log("Got data: " + data);
+	    point.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
         spacecraft.state[point.id] = point.value;
 
@@ -33,9 +38,11 @@ function RealtimeServer(spacecraft,db) {
         var subscribed = {}; // Active subscriptions for this connection
         var handlers = { // Handlers for specific requests
                 subscribe: function (id) {
+                    console.log("got subscriber");
                     subscribed[id] = true;
                 },
                 unsubscribe: function (id) {
+                    console.log("unsub");
                     delete subscribed[id];
                 }
             };
