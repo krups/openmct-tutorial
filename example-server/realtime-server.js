@@ -2,9 +2,8 @@ var express = require('express');
 
 const { SerialPort } = require('serialport')
 const { ReadlineParser } = require('@serialport/parser-readline')
-//const port = new SerialPort({ path: '/dev/tty.usbmodem21201', baudRate: 115200 }, false)
-const port = new SerialPort({ path: '/dev/tty.usbmodem1201', baudRate: 115200 }, false)
-//const port = new SerialPort({ path: '/dev/tty.usbmodem65060901', baudRate: 115200 }, false)
+
+const port = new SerialPort({ path: process.env.SERIALPORT , baudRate: 115200 }, false)
 
 port.on('error', function(err) {
     console.log("Error opening serial port: " + err); // THIS SHOULD WORK!
@@ -52,8 +51,9 @@ function RealtimeServer(spacecraft,db) {
                 },
                 gs: function(cmdstring) {
                     console.log("sending command to serial port...");
-                    console.log("\" "+cmdstring+"\"");
-                    port.write(cmdstring.trim());
+                    console.log("\" "+cmdstring.trim().split('_').join(' ')+"\"");
+                    port.write(cmdstring.trim().split('_').join(' '));
+                    port.write("\r\n");
                 }
                 
             };
