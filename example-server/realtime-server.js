@@ -2,7 +2,9 @@ var express = require('express');
 
 const { SerialPort } = require('serialport')
 const { ReadlineParser } = require('@serialport/parser-readline')
-const port = new SerialPort({ path: '/dev/tty.usbmodem21201', baudRate: 115200 }, false)
+//const port = new SerialPort({ path: '/dev/tty.usbmodem21201', baudRate: 115200 }, false)
+const port = new SerialPort({ path: '/dev/tty.usbmodem1201', baudRate: 115200 }, false)
+//const port = new SerialPort({ path: '/dev/tty.usbmodem65060901', baudRate: 115200 }, false)
 
 port.on('error', function(err) {
     console.log("Error opening serial port: " + err); // THIS SHOULD WORK!
@@ -19,20 +21,23 @@ function RealtimeServer(spacecraft,db) {
 
     parser.on('data', function (data) 
     {
-        point = JSON.parse(data);
+	try {
+	    point = JSON.parse(data);
 	    point.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        spacecraft.state[point.id] = point.value;
-
-        // insert one row into the langs table
-        db.run("INSERT INTO history(timestamp,value,id) VALUES(?,?,?)", [point.timestamp, point.value, point.id], function(err) {
-            if (err) {
-            return console.log(err.message);
-            }
-        });
+            spacecraft.state[point.id] = point.value;
+	    
+            // insert one row into the langs table                                                                                    
+            db.run("INSERT INTO history(timestamp,value,id) VALUES(?,?,?)", [point.timestamp, point.value, point.id], function(err) {
+		if (err) {
+		    return console.log(err.message);
+		}
+            });
+	} catch (e) {
+	    console.log("data wasnt json: " + data);
+	}
     });
-    
-
+        
     router.ws('/', function (ws) {
         var unlisten = spacecraft.listen(notifySubscribers);
         var subscribed = {}; // Active subscriptions for this connection
@@ -44,7 +49,13 @@ function RealtimeServer(spacecraft,db) {
                 unsubscribe: function (id) {
                     console.log("unsub");
                     delete subscribed[id];
+                },
+                gs: function(cmdstring) {
+                    console.log("sending command to serial port...");
+                    console.log("\" "+cmdstring+"\"");
+                    port.write(cmdstring.trim());
                 }
+                
             };
 
         function notifySubscribers(point) {

@@ -157,7 +157,7 @@ exampleSocket.onmessage = function(event) {
     
   var targetQuaternion = new THREE.Quaternion(newQuat[1], newQuat[2], newQuat[3], newQuat[0]);       
   
-  group.quaternion.slerp(targetQuaternion, 1);
+  group.quaternion.slerp(targetQuaternion, 0.9);
   
   renderer.render(scene, camera);
 

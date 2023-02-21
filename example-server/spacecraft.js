@@ -5,6 +5,15 @@
 function Spacecraft() {
     this.state = {
         "bat": 4.2,
+        "ext_bat": 11.1,
+        "systime": 0,
+        "utctime": 0,
+
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "altitude": 0.0,
+        "velocity": 0.0,
+
         "irsig": 0,
         "internal_temperature": 0.0,
         "prs1": 0.0,
@@ -41,7 +50,7 @@ function Spacecraft() {
     setInterval(function () {
         //this.updateState();
         this.generateTelemetry();
-    }.bind(this), 1000);
+    }.bind(this), 100);
 
     // console.log("Example spacecraft launched!");
     // console.log("Press Enter to toggle thruster state.");
