@@ -580,6 +580,48 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "GPS",
+            "key": "gps",
+            "values": [
+                {
+                    "key": "data",
+                    "name": "GPS Data",
+                    "units": "arbitrary",
+                    "format": "object"
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Spectrometer",
+            "key": "spec",
+            "values": [
+                {
+                    "key": "data",
+                    "name": "Spectrometer Data Time",
+                    "units": "arbitrary",
+                    "format": "object"
+                },
+                {
+                    "key": "utc",
+                    "source": "timestamp",
+                    "name": "Timestamp",
+                    "format": "utc",
+                    "hints": {
+                        "domain": 1
+                    }
+                }
+            ]
         }
     ]
 }

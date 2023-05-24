@@ -9,10 +9,9 @@ function Spacecraft() {
         "systime": 0,
         "utctime": 0,
 
-        "latitude": 0.0,
-        "longitude": 0.0,
-        "altitude": 0.0,
-        "velocity": 0.0,
+        "gps": {"time":0.0, "lat": 0.0, "lon": 0.0, "vel": 0.0, "alt": 0.0, "gps_utc": "0:0:0:0.0"},
+
+        "spec": {"itime":0,"bin1":0,"bin2":0,"bin3":0,"bin4":0,"bin5":0,"bin6":0},
 
         "irsig": 0,
         "internal_temperature": 0.0,

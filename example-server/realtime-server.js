@@ -18,23 +18,49 @@ function RealtimeServer(spacecraft,db) {
 
     const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }))
 
-    parser.on('data', function (data) 
-    {
-	try {
-	    point = JSON.parse(data);
-	    point.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    parser.on('data', function (data) {
+        try {
+            point = JSON.parse(data);
+            point.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-            spacecraft.state[point.id] = point.value;
-	    
-            // insert one row into the langs table                                                                                    
-            db.run("INSERT INTO history(timestamp,value,id) VALUES(?,?,?)", [point.timestamp, point.value, point.id], function(err) {
-		if (err) {
-		    return console.log(err.message);
-		}
-            });
-	} catch (e) {
-	    console.log("data wasnt json: " + data);
-	}
+            if( point.id == "spec" ){
+                //console.log(point);
+                //spacecraft.state['spec'] = point;
+                spacecraft.state['spec'].itime = point.itime;
+                spacecraft.state['spec'].bin1 = point.bin1;
+                spacecraft.state['spec'].bin2 = point.bin2;
+                spacecraft.state['spec'].bin3 = point.bin3;
+                spacecraft.state['spec'].bin4 = point.bin4;
+                spacecraft.state['spec'].bin5 = point.bin5;
+                spacecraft.state['spec'].bin6 = point.bin6;
+            }
+            else if( point.id == "gga" ){
+                spacecraft.state['gps'].time = point.time;
+                spacecraft.state['gps'].lat = point.lat;
+                spacecraft.state['gps'].lon = point.lon;
+                spacecraft.state['gps'].alt = point.alt;
+                spacecraft.state['gps'].gps_utc = point.gps_utc;
+            }
+            else if ( point.id == "rmc" ){
+                spacecraft.state['gps'].time = point.time;
+                spacecraft.state['gps'].lat = point.lat;
+                spacecraft.state['gps'].lon = point.lon;
+                spacecraft.state['gps'].vel = point.vel;
+                spacecraft.state['gps'].gps_utc = point.gps_utc;
+            }
+            else {
+                spacecraft.state[point.id] = point.value;
+                // only insert if its in the one value format
+                // TODO: make this work for spec and gps                                                                           
+                db.run("INSERT INTO history(timestamp,value,id) VALUES(?,?,?)", [point.timestamp, point.value, point.id], function(err) {
+                    if (err) {
+                        return console.log(err.message);
+                    }
+                });
+            }
+        } catch (e) {
+            console.log(data);
+        }
     });
         
     router.ws('/', function (ws) {

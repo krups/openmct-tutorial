@@ -6,7 +6,8 @@ This THREE.js model renders a KRUPS model. This page assumes there is an
  OpenMCT instance running that can be connected to and which provides quaternions 
  to use for visualizations
 
-Matt Ruffner, Evan Wells 2022
+Evan Wells 2022
+Updated May 2023 by Matt Ruffner
 University of Kentucky
 */
 import { OBJLoader} from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/OBJLoader.js';

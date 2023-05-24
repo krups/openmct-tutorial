@@ -1,0 +1,77 @@
+<html>
+
+<div>
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('myChart');
+  
+    chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['340-496 nm', '497-567 nm', '567-638 nm', '639-709 nm', '710-780 nm', '780-850 nm'],
+        datasets: [{
+          label: 'Relative intensity',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+
+
+    // connection to the wesocket server
+    var exampleSocket = new WebSocket("ws://127.0.0.1:8080/realtime");
+    var lp = 0;
+
+    exampleSocket.onopen = function(event) {
+
+    console.log("connected to websocket");
+    console.log(event);
+
+    if( event.type == "open") {
+        exampleSocket.send("subscribe spec");
+    };
+    }
+
+    exampleSocket.onerror = function(event) {
+        console.log("websocket error: ");
+        console.log(event);
+    }
+    
+    //            [W,X,Y,Z]
+    let specVals = [0, 0, 0,0,0,0,0,0];
+
+    // each part of the quat comes in as a separate message so only update after getting 
+    // a fresh set
+    exampleSocket.onmessage = function(event) {
+        console.log(event.data)
+        var jsonObj = JSON.parse(event.data);
+        
+        if ( jsonObj.hasOwnProperty("id") && jsonObj.hasOwnProperty("value") ){
+            if ( jsonObj.id == "spec" ){
+                //newQuat[3] = jsonObj.value;
+                var d = jsonObj.value;
+                chart.data.datasets[0].data = [d.bin1, d.bin2, d.bin3, d.bin4, d.bin5, d.bin6];
+                chart.update();
+            }
+        } else {
+            return;
+        }
+
+
+
+    }
+  </script>
+
+</html>
